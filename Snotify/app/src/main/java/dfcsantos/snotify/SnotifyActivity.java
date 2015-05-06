@@ -19,7 +19,6 @@ public class SnotifyActivity extends ActionBarActivity {
 		filter.addAction(SnotifyBroadcastReceiver.BroadcastTypes.METADATA_CHANGED);
 		registerReceiver(receiver, filter);
 
-
 		finish();
 	}
 

@@ -22,29 +22,15 @@ public class SnotifyBroadcastReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		// This is sent with all broadcasts, regardless of type. The value is taken from
-		// System.currentTimeMillis(), which you can compare to in order to determine how
-		// old the event is.
-		long timeSentInMs = intent.getLongExtra("timeSent", 0L);
-
 		String action = intent.getAction();
 
 		if (action.equals(BroadcastTypes.METADATA_CHANGED)) {
 			String trackId = intent.getStringExtra("id");
 			String artistName = intent.getStringExtra("artist");
-			String albumName = intent.getStringExtra("album");
 			String trackName = intent.getStringExtra("track");
-			int trackLengthInSec = intent.getIntExtra("length", 0);
 
 			String uri = trackId.replace("spotify:track:", "http://open.spotify.com/track/");
 			activity.startService(activity.getIntent().<Intent>getParcelableExtra("SEND_MESSAGE").setAction(artistName + " - " + trackName + " - " + uri));
-
-		} else if (action.equals(BroadcastTypes.PLAYBACK_STATE_CHANGED)) {
-			boolean playing = intent.getBooleanExtra("playing", false);
-			int positionInMs = intent.getIntExtra("playbackPosition", 0);
-			// Do something with extracted information
-		} else if (action.equals(BroadcastTypes.QUEUE_CHANGED)) {
-			// Sent only as a notification, your app may want to respond accordingly.
 		}
 	}
 
